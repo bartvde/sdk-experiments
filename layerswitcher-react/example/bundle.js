@@ -6,14 +6,29 @@ var LayerList = require('../');
 
 var map = new ol.Map({
   layers: [new ol.layer.Tile({
-    visible: true,
-    title: 'OpenStreetMap',
-    source: new ol.source.OSM()
+    title: 'Streets',
+    source: new ol.source.MapQuest({ layer: 'osm' })
+  }), new ol.layer.Tile({
+    visible: false,
+    title: 'Aerial',
+    source: new ol.source.MapQuest({ layer: 'sat' })
+  }), new ol.layer.Vector({
+    title: 'Zoning',
+    style: new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: 'black',
+        width: 4
+      })
+    }),
+    source: new ol.source.Vector({
+      format: new ol.format.GeoJSON(),
+      url: 'data/medford-zoning.json'
+    })
   })],
   target: 'map',
   view: new ol.View({
-    center: [0, 0],
-    zoom: 2
+    center: ol.proj.fromLonLat([-122.85676399771559, 42.3389246879193]),
+    zoom: 12
   })
 });
 React.render(React.createElement(LayerList, { map: map }), document.getElementById('layerlist'));
