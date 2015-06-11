@@ -1,7 +1,8 @@
+/* global ol */
 'use strict';
 
 import React from 'react';
-import LayerList from './components/LayerList.jsx'
+import LayerList from './components/LayerList.jsx';
 
 var map = new ol.Map({
   layers: [
@@ -34,6 +35,7 @@ var map = new ol.Map({
     zoom: 12
   })
 });
-
+/*jshint ignore:start */
 React.render(<LayerList map={map} />,
   document.getElementById('layerlist'));
+/*jshint ignore:end */
