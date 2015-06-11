@@ -1,6 +1,8 @@
 'use strict';
 
 import {EventEmitter} from 'events';
+import AppDispatcher from '../dispatchers/AppDispatcher.js';
+import MapConstants from '../constants/MapConstants.js';
 
 let config = {
   layers: []
@@ -8,10 +10,14 @@ let config = {
 
 class LayerStore extends EventEmitter {
   bindMap(map) {
-    config.layers = map.getLayers().getArray();
+    this._map = map;
+    config.layers = this._map.getLayers().getArray();
     this.emitChange();
-    map.getLayers().on('add', this.emitChange, this);
-    map.getLayers().on('remove', this.emitChange, this);
+    this._map.getLayers().on('add', this.emitChange, this);
+    this._map.getLayers().on('remove', this.emitChange, this);
+  }
+  getMap() {
+    return this._map;
   }
   getState() {
     return config;
@@ -30,3 +36,14 @@ class LayerStore extends EventEmitter {
 let _LayerStore = new LayerStore();
 
 export default _LayerStore;
+
+AppDispatcher.register((payload) => {
+  let action = payload.action;
+  switch(action.type) {
+    case MapConstants.REMOVE_LAYER:
+      _LayerStore.getMap().removeLayer(action.data);
+    break;
+    default:
+    break;
+  }
+});

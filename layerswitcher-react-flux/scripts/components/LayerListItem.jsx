@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import LayerActions from '../actions/LayerActions.js';
 
 export default class LayerListItem extends React.Component {
   constructor(props) {
@@ -10,14 +11,19 @@ export default class LayerListItem extends React.Component {
     }, this);
     this.state = {checked: props.layer.getVisible()};
   }
-  handleChange(event) {
-    this.props.layer.setVisible(event.target.checked);
+  _handleChange(event) {
+    LayerActions.setVisible(this.props.layer, event.target.checked);
     this.setState({checked: event.target.checked});
+  }
+  _handleRemove(event) {
+    LayerActions.removeLayer(this.props.layer);
   }
   render() {
     return (
       /*jshint ignore:start */
-      <li><input type="checkbox" checked={this.state.checked} onChange={this.handleChange.bind(this)}/>{this.props.title}</li>
+      <li><input type="checkbox" checked={this.state.checked}
+      onChange={this._handleChange.bind(this)}/>{this.props.title}
+      <button onClick={this._handleRemove.bind(this)}/></li>
       /*jshint ignore:end */
     );
   }

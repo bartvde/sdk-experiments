@@ -17,10 +17,10 @@ export default class LayerList extends React.Component {
     this.setState(LayerStore.getState());
   }
   render() {
-    var layerNodes = this.state.layers.map(function(lyr, idx) {
+    var layerNodes = this.state.layers.map(function(lyr) {
       return (
         /*jshint ignore:start */
-        <LayerListItem key={idx} layer={lyr} title={lyr.get('title')} />
+        <LayerListItem key={lyr.get('title')} layer={lyr} title={lyr.get('title')} />
         /*jshint ignore:end */
       );
     });
