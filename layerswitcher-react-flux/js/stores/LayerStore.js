@@ -40,8 +40,11 @@ export default _LayerStore;
 AppDispatcher.register((payload) => {
   let action = payload.action;
   switch(action.type) {
+    case MapConstants.CHANGE_VISIBILITY:
+      action.layer.setVisible(action.visible);
+    break;
     case MapConstants.REMOVE_LAYER:
-      _LayerStore.getMap().removeLayer(action.data);
+      _LayerStore.getMap().removeLayer(action.layer);
     break;
     default:
     break;

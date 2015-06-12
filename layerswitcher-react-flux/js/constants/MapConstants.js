@@ -1,6 +1,9 @@
 'use strict';
 
-export default {
-  ADD_LAYER: 'ADD_LAYER',
-  REMOVE_LAYER: 'REMOVE_LAYER'
-};
+import keymirror from 'keymirror';
+
+export default keymirror({
+  ADD_LAYER: null,
+  REMOVE_LAYER: null,
+  CHANGE_VISIBILITY: null
+});

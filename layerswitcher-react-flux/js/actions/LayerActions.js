@@ -5,12 +5,16 @@ import AppDispatcher from '../dispatchers/AppDispatcher.js';
 
 export default {
   setVisible: (layer, visible) => {
-    layer.setVisible(visible);
+    AppDispatcher.handleAction({
+      type: MapConstants.CHANGE_VISIBILITY,
+      layer: layer,
+      visible: visible
+    });
   },
   removeLayer: (layer) => {
     AppDispatcher.handleAction({
       type: MapConstants.REMOVE_LAYER,
-      data: layer
+      layer: layer
     });
   }
 };
